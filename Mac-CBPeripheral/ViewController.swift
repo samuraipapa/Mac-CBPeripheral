@@ -13,6 +13,8 @@ import CoreBluetooth
 
 class ViewController: NSViewController, CBPeripheralManagerDelegate {
 
+    @IBOutlet weak var myTextField: NSTextField!
+    
     // Core Bluetooth Stuff
     var myPeripheralManager: CBPeripheralManager?
     
@@ -26,10 +28,18 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
 
     
     
+    @IBAction func buttonPressed(sender: NSButton) {
+        println( myTextField.stringValue )
+        advertiseNewName(myTextField.stringValue)
+        
+    }
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        myTextField.stringValue = " Hey Now ! "
 
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         myPeripheralManager = CBPeripheralManager(delegate: self, queue: queue)
@@ -48,7 +58,7 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
     //MARK  CBPeripheral
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
         // Stop Advertising
-        peripheral.stopAdvertising()
+    //    peripheral.stopAdvertising()
         
         // UI Stuff
         var stateString =  String(peripheral.state.rawValue)
@@ -61,14 +71,14 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
         let theUUid = CBUUID(NSUUID: uuid)
         
         let dataToBeAdvertised:[String:AnyObject!] = [
-            CBAdvertisementDataLocalNameKey: "Hi, This is Name Message Here",
+            CBAdvertisementDataLocalNameKey: "Hello 55 Message",
             CBAdvertisementDataManufacturerDataKey: "Hello Hello Hello Hello",
             CBAdvertisementDataServiceUUIDsKey: [theUUid],]
         
         // Start Advertising The Packet
-        peripheral.startAdvertising(dataToBeAdvertised)
+        myPeripheralManager?.startAdvertising(dataToBeAdvertised)
         
-        
+//
         
     }
     
@@ -81,6 +91,36 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
         }
         
     }
+    
+    
+    
+    func advertiseNewName(passedString: String ){
+        
+        // Stop Advertising
+        myPeripheralManager?.stopAdvertising()
+        
+        // UI Stuff
+        
+        
+        // Prep Advertising Packet for Periperhal
+        let manufacturerData = identifer.dataUsingEncoding(NSUTF8StringEncoding,allowLossyConversion: false)
+        
+        let theUUid = CBUUID(NSUUID: uuid)
+        
+        let dataToBeAdvertised:[String:AnyObject!] = [
+            CBAdvertisementDataLocalNameKey: "\(passedString)",
+            CBAdvertisementDataManufacturerDataKey: "Hello Hello Hello Hello",
+            CBAdvertisementDataServiceUUIDsKey: [theUUid],]
+        
+        // Start Advertising The Packet
+        myPeripheralManager?.startAdvertising(dataToBeAdvertised)
+        
+
+        
+    }
+    
+    
+    
     
     
     
