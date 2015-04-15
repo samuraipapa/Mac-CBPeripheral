@@ -71,7 +71,7 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
         let theUUid = CBUUID(NSUUID: uuid)
         
         let dataToBeAdvertised:[String:AnyObject!] = [
-            CBAdvertisementDataLocalNameKey: "Hello 55 Message",
+            CBAdvertisementDataLocalNameKey: "Ghost Chat DidUpdateState",
             CBAdvertisementDataManufacturerDataKey: "Hello Hello Hello Hello",
             CBAdvertisementDataServiceUUIDsKey: [theUUid],]
         
