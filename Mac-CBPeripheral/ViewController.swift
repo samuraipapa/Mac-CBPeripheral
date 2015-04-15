@@ -40,7 +40,6 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
         super.viewDidLoad()
         
         myTextField.stringValue = " Hey Now ! "
-
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         myPeripheralManager = CBPeripheralManager(delegate: self, queue: queue)
         
