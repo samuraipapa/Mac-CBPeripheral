@@ -17,6 +17,7 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
     
     // Core Bluetooth Stuff
     var myPeripheralManager: CBPeripheralManager?
+    var dataToBeAdvertisedGolbal:[String:AnyObject!]?
     
     // A newly generated UUID for our beacon
     let uuid = NSUUID()
@@ -26,6 +27,7 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
     
     let myHeartRateServiceUUID = CBUUID(string: "180D")
 
+    @IBOutlet weak var textAfterSend: NSTextField!
     
     
     @IBAction func buttonPressed(sender: NSButton) {
@@ -34,6 +36,18 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
         
     }
     
+    
+    //UI Stuff
+    func updateTextAfterSent(passedString: String){
+        textAfterSend.stringValue = passedString + "\r" + textAfterSend.stringValue
+        
+    }
+    
+    @IBAction func buttonPeripheralOFF(sender: NSButton) {
+        println("OFF pressed")
+        myPeripheralManager?.stopAdvertising()
+        println(" State: " + "\(myPeripheralManager?.state.rawValue)"  )
+    }
     
     
     override func viewDidLoad() {
@@ -56,40 +70,105 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
     }
     //MARK  CBPeripheral
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
+
+       println("did update state!")
         // Stop Advertising
-    //    peripheral.stopAdvertising()
+        peripheral.stopAdvertising()
+
+        
+        switch (peripheral.state) {
+        case .PoweredOn:
+            println(" Powered ON State: " + "\(myPeripheralManager?.state.rawValue)"  )
+
+            
+            println("We are ON!")
+
+                // Prep Advertising Packet for Periperhal
+                let manufacturerData = identifer.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+                
+                let theUUid = CBUUID(NSUUID: uuid)
+                
+                let dataToBeAdvertised:[String:AnyObject!] = [
+                    CBAdvertisementDataLocalNameKey: "Ghost Chat DidUpdateState",
+                    CBAdvertisementDataManufacturerDataKey: "Hello Hello Hello Hello",
+                    CBAdvertisementDataServiceUUIDsKey: [theUUid],]
+                
+                
+                
+                
+                dataToBeAdvertisedGolbal = dataToBeAdvertised
+                // Start Advertising The Packet
+                myPeripheralManager?.startAdvertising(dataToBeAdvertised)
+
+            
+            
+   
+            break
+        case .PoweredOff:
+            println(" Powered OFF State: " + "\(myPeripheralManager?.state.rawValue)"  )
+
+            println("We are off!")
+            
+    break;
+
+        case .Resetting:
+            println(" State: " + "\(myPeripheralManager?.state.rawValue)"  )
+
+            
+            break;
+
+        case .Unauthorized:
+            //
+            println(" State: " + "\(myPeripheralManager?.state.rawValue)"  )
+
+            break;
+
+        case .Unknown:
+            //
+            println(" State: " + "\(myPeripheralManager?.state.rawValue)"  )
+
+            break;
+
+        case .Unsupported:
+            //
+            println(" State: " + "\(myPeripheralManager?.state.rawValue)"  )
+
+            break;
+
+  default:
+    println(" State: " + "\(myPeripheralManager?.state.rawValue)"  )
+
+    break;
+}
         
         // UI Stuff
-        var stateString =  String(peripheral.state.rawValue)
-        println("The peripheral state is: \(peripheral.state.hashValue)")
+//        var stateString =  String(peripheral.state.rawValue)
+//        println("The peripheral state is: \(peripheral.state.hashValue)")
+//        updateTextAfterSent("The peripheral state is: \(peripheral.state.hashValue)")
+//        
         
-        
-        // Prep Advertising Packet for Periperhal
-        let manufacturerData = identifer.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-        
-        let theUUid = CBUUID(NSUUID: uuid)
-        
-        let dataToBeAdvertised:[String:AnyObject!] = [
-            CBAdvertisementDataLocalNameKey: "Ghost Chat DidUpdateState",
-            CBAdvertisementDataManufacturerDataKey: "Hello Hello Hello Hello",
-            CBAdvertisementDataServiceUUIDsKey: [theUUid],]
-        
-        // Start Advertising The Packet
-        myPeripheralManager?.startAdvertising(dataToBeAdvertised)
-        
+      //        }
 //
         
     }
     
     func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager!, error: NSError!) {
         //
+        println(" State in DidStartAdvertising: " + "\(myPeripheralManager?.state.rawValue)"  )
+        
         if error == nil {
+//            let myString = peripheral.isAdvertising
             println("Succesfully Advertising Data")
+            updateTextAfterSent("Succesfully Advertising Data")
+            
         } else{
             println("Failed to Advertise Data.  Error = \(error)")
+            updateTextAfterSent("Failed to Advertise Data.  Error = \(error)")
         }
         
     }
+    
+    
     
     
     
