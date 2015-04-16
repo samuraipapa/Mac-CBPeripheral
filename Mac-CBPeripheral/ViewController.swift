@@ -14,6 +14,7 @@ import CoreBluetooth
 class ViewController: NSViewController, CBPeripheralManagerDelegate {
 
     @IBOutlet weak var myTextField: NSTextField!
+    @IBOutlet weak var nameField: NSTextField!
     
     // Core Bluetooth Stuff
     var myPeripheralManager: CBPeripheralManager?
@@ -34,12 +35,32 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
         println( myTextField.stringValue )
         advertiseNewName(myTextField.stringValue)
         
+//        let nameString = nameField.stringValue
+//        let messageString = myTextField.stringValue
+//        let localNameChatString = "Ghost: \(nameString) > \(messageString)"
+//
+//        advertiseNewName(localNameChatString)
+        
+        
     }
     
     
     //UI Stuff
+    @IBAction func nameTyped(sender: NSTextField) {
+        //
+        //
+    }
+    
+    
     func updateTextAfterSent(passedString: String){
+        
+        
         textAfterSend.stringValue = passedString + "\r" + textAfterSend.stringValue
+        
+        
+        
+    }
+    @IBAction func nameButtonPressed(sender: NSButton) {
         
     }
     
@@ -53,7 +74,8 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        myTextField.stringValue = " Hey Now ! "
+        myTextField.stringValue = "I'm on Ghost Chat."
+        
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         myPeripheralManager = CBPeripheralManager(delegate: self, queue: queue)
         
@@ -87,9 +109,13 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
                 let manufacturerData = identifer.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
                 
                 let theUUid = CBUUID(NSUUID: uuid)
-                
+            
+                let nameString = nameField.stringValue
+                let messageString = myTextField.stringValue
+            let localNameChatString = "Ghost: \(messageString)"
+            
                 let dataToBeAdvertised:[String:AnyObject!] = [
-                    CBAdvertisementDataLocalNameKey: "Ghost Chat DidUpdateState",
+                    CBAdvertisementDataLocalNameKey: "\(localNameChatString)",
                     CBAdvertisementDataManufacturerDataKey: "Hello Hello Hello Hello",
                     CBAdvertisementDataServiceUUIDsKey: [theUUid],]
                 
@@ -185,9 +211,11 @@ class ViewController: NSViewController, CBPeripheralManagerDelegate {
         
         let theUUid = CBUUID(NSUUID: uuid)
         
+        let nameString = nameField.stringValue
+        
         let dataToBeAdvertised:[String:AnyObject!] = [
-            CBAdvertisementDataLocalNameKey: "\(passedString)",
-            CBAdvertisementDataManufacturerDataKey: "Hello Hello Hello Hello",
+            CBAdvertisementDataLocalNameKey: "GC: \(nameString): \(passedString)",
+            CBAdvertisementDataManufacturerDataKey: "Hello anufacturerDataKey",
             CBAdvertisementDataServiceUUIDsKey: [theUUid],]
         
         // Start Advertising The Packet

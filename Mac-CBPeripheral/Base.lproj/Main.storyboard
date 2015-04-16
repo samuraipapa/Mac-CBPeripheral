@@ -682,9 +682,19 @@
                                     <action selector="buttonPressed:" target="XfG-lQ-9wD" id="wY4-2W-zsr"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hMe-By-m8n">
+                                <rect key="frame" x="14" y="229" width="120" height="32"/>
+                                <buttonCell key="cell" type="push" title="Name" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0Jn-RX-KyQ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="nameButtonPressed:" target="XfG-lQ-9wD" id="X1b-Gk-Of7"/>
+                                </connections>
+                            </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ok7-wu-Fc8">
-                                <rect key="frame" x="218" y="265" width="215" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="One Word One Word One Lastyyy" drawsBackground="YES" id="BYm-PZ-sfq">
+                                <rect key="frame" x="216" y="265" width="215" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="I'm on Ghost Chat." placeholderString="I'm on Ghost Chat." drawsBackground="YES" id="BYm-PZ-sfq">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -699,13 +709,12 @@
                                 </textFieldCell>
                             </textField>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xX1-b5-n6G">
-                                <rect key="frame" x="20" y="302" width="419" height="184"/>
+                                <rect key="frame" x="20" y="364" width="419" height="122"/>
                                 <clipView key="contentView" misplaced="YES" id="PDe-H3-IW3">
                                     <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="aFr-K5-vTy" viewBased="YES" id="Zvz-d2-n7I">
-                                            <rect key="frame" x="0.0" y="0.0" width="238" height="134"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -794,7 +803,7 @@
                                 </tableHeaderView>
                             </scrollView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Lw-kO-jtA">
-                                <rect key="frame" x="14" y="229" width="200" height="32"/>
+                                <rect key="frame" x="14" y="316" width="200" height="32"/>
                                 <buttonCell key="cell" type="push" title="Go Silent" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pNN-97-nxM">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -803,6 +812,17 @@
                                     <action selector="buttonPeripheralOFF:" target="XfG-lQ-9wD" id="WDT-wG-9RB"/>
                                 </connections>
                             </button>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JG2-EK-k1e">
+                                <rect key="frame" x="20" y="265" width="108" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="Anon" drawsBackground="YES" id="BWQ-gW-WNr">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="nameTyped:" target="XfG-lQ-9wD" id="gMc-h4-YAA"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <shadow key="shadow">
                             <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -810,6 +830,7 @@
                     </view>
                     <connections>
                         <outlet property="myTextField" destination="Ok7-wu-Fc8" id="QV7-kC-XSA"/>
+                        <outlet property="nameField" destination="JG2-EK-k1e" id="LXx-J9-DXR"/>
                         <outlet property="textAfterSend" destination="EBx-z3-w7D" id="Cwg-Y1-dNa"/>
                     </connections>
                 </viewController>
